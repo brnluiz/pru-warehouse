@@ -19,5 +19,9 @@
   "homepage": "https://github.com/brnluiz/pru-warehouse#readme",
   "devDependencies": {
     "standard": "^10.0.2"
+  },
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "express": "^4.15.3"
   }
 }
