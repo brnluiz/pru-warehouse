@@ -8,10 +8,9 @@ const isDirectory = (dir, file) =>
 const importComponent = (app, component) =>
   app.use(`/${component}`, require(`./${component}`))
 
-const routes = (app) => {
+const routes = (app) =>
   fs.readdirSync(dir)
     .filter(file => isDirectory(dir, file))
     .forEach(component => importComponent(app, component))
-}
 
 module.exports = routes
