@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node index.js | ./node_modules/.bin/bunyan",
     "test": "standard"
   },
   "repository": {
@@ -21,6 +21,7 @@
     "standard": "^10.0.2"
   },
   "dependencies": {
+    "bunyan": "^1.8.10",
     "dotenv": "^4.0.0",
     "express": "^4.15.3"
   }

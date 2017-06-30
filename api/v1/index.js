@@ -1,3 +1,4 @@
+const log = require('../../helpers/log')
 const fs = require('fs')
 const path = require('path')
 const dir = __dirname
@@ -5,8 +6,10 @@ const dir = __dirname
 const isDirectory = (dir, file) =>
   fs.lstatSync(path.join(dir, file)).isDirectory()
 
-const importComponent = (app, component) =>
-  app.use(`/${component}`, require(`./${component}`))
+const importComponent = (app, component) => {
+  log.info(`Added route /${component}`)
+  return app.use(`/${component}`, require(`./${component}`))
+}
 
 const routes = (app) =>
   fs.readdirSync(dir)
