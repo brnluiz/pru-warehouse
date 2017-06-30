@@ -1,15 +1,12 @@
 const router = require('express').Router()
 
+const collectPostController = require('./controllers/locations-collect-post-by-location-controller')
+const collectPostByLocationController = require('./controllers/locations-collect-post-by-location-controller')
+
 // TODO: queue the collection process of all enabled locations
-router.post('/collect', (req, res, next) => {
-  res.sendstatus(200)
-  next()
-})
+router.post('/collect', collectPostController)
 
 // TODO: start the collection process for the specified location
-router.post('/collect/:location', (req, res, next) => {
-  res.sendstatus(200)
-  next()
-})
+router.post('/collect/:location', collectPostByLocationController)
 
 module.exports = router
