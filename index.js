@@ -1,8 +1,8 @@
-const express = require('express')
+const app = require('express')()
 
+require('./api/v1')(app)
 require('dotenv').config()
+
+// Init the server and listen to the PORT configured on the dotenv file
 const port = process.env.PORT
-
-let app = express()
-
 app.listen(port, () => console.log('Up and running!'))
