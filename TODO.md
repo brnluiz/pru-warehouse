@@ -1,0 +1,9 @@
+- [ ] Choose a test framework
+- [ ] Implement acceptance tests
+- [ ] Choose between SQL or NoSQL
+- [ ] Implement models
+- [ ] Implement services
+- [ ] Implement workers/handlers/whatever (check a proper structure)
+- [ ] Implement a notification manager
+- [ ] Implement queue (RabbitMQ or Redis)
+- [ ] Implement an auth system (HTTP Basic)
