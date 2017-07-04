@@ -11,7 +11,7 @@ test('before all', async t => {
   t.end()
 })
 
-test('create a collection request', t =>
+test('create a collection request on all locations', t =>
   request
     .post('/locations/collect')
     .set('Accept', 'application/json')
