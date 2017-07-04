@@ -1,8 +1,8 @@
-const request = require('supertest')('http://localhost:8080')
 const test = require('tape')
 
 const db = require('../db')
 const fixtures = require('../db/fixtures')
+const request = require('../helpers/supertest')
 
 test('before all', async t => {
   await db.location.sync({ force: true })
