@@ -1,5 +1,12 @@
-const supertest = require('supertest')
+const request = require('supertest')
 
 require('dotenv').config()
 
-module.exports = supertest(`http://localhost:${process.env.PORT}`)
+let supertest
+if (process.env.NODE_ENV === 'test') {
+  supertest = request(require('../app'))
+} else {
+  supertest = request(`http://localhost:${process.env.PORT}`)
+}
+
+module.exports = supertest
