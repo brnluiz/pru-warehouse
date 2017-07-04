@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node app.js | ./node_modules/.bin/bunyan",
-    "acceptance": "NODE_ENV=test tape acceptance/**/*.js | tap-spec",
+    "acceptance": "NODE_ENV=test tap-prettify acceptance/**/*.js",
     "lint": "standard",
     "test": "standard && NODE_ENV=test tape **/*.js | tap-spec"
   },
@@ -22,7 +22,6 @@
   "devDependencies": {
     "standard": "^10.0.2",
     "supertest": "^3.0.0",
-    "tap-spec": "^4.1.1",
     "tape": "^4.7.0"
   },
   "dependencies": {
@@ -31,6 +30,7 @@
     "express": "^4.15.3",
     "pg": "^6.4.0",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^4.2.1"
+    "sequelize": "^4.2.1",
+    "tap-prettify": "0.0.2"
   }
 }
