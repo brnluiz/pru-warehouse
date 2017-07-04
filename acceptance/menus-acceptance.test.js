@@ -2,6 +2,20 @@ const app = require('../app')
 const request = require('supertest')(app)
 const test = require('tape')
 
+const db = require('../db')
+const fixtures = require('../db/fixtures')
+
+test('before all', async t => {
+  await db.location.sync({ force: true })
+  await db.menu.sync({ force: true })
+  await db.menu.create(fixtures.menu, {
+    include: [{
+      association: db.menu.location
+    }]
+  })
+  t.end()
+})
+
 test('should get a menu from a location', t =>
   request
     .get('/menus/testLocation')
