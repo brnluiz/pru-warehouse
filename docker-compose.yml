@@ -1,0 +1,13 @@
+version: '2'
+services:
+  web:
+    env_file: .env.docker
+    build: .
+    ports:
+      - '8080:80'
+    links:
+      - 'postgres:db.host'
+    volumes:
+      - .:/opt/pru-warehouse
+  postgres:
+    image: 'postgres:alpine'

@@ -1,5 +1,4 @@
-const app = require('../app')
-const request = require('supertest')(app)
+const request = require('supertest')('http://localhost:8080')
 const test = require('tape')
 
 const db = require('../db')
