@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node app.js | ./node_modules/.bin/bunyan",
-    "acceptance": "NODE_ENV=test tap-prettify acceptance/**/*.js",
+    "acceptance": "NODE_ENV=test tape acceptance/**/*.js | tap-spec",
     "lint": "standard",
     "test": "standard && NODE_ENV=test tape **/*.js | tap-spec"
   },
@@ -22,6 +22,7 @@
   "devDependencies": {
     "standard": "^10.0.2",
     "supertest": "^3.0.0",
+    "tap-spec": "^4.1.1",
     "tape": "^4.7.0"
   },
   "dependencies": {
