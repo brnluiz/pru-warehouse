@@ -1,4 +1,3 @@
-const changeCase = require('change-case')
 const fs = require('fs')
 const path = require('path')
 const Sequelize = require('sequelize')
