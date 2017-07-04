@@ -1,6 +1,6 @@
 const Location = (sql, DataType) => sql.define('location', {
   name: { type: DataType.STRING },
-  description: { type: DataType.STRING, allowNull: true },
+  description: { type: DataType.TEXT, allowNull: true },
   price: { type: DataType.FLOAT }
 })
 

@@ -1,10 +1,10 @@
 const location = require('./location')
 
 module.exports = {
-  items: {
-    main: 'Fish and Chips',
-    dessert: 'Gelato'
-  },
+  items: [
+    'Fish and Chips',
+    'Gelato'
+  ],
   date: new Date(),
   location
 }
