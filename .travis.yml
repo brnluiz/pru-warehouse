@@ -1,1 +1,19 @@
-language: node_js
+dist: trusty
+sudo: required
+
+services:
+  - docker
+
+before_script:
+  - docker-compose -v
+  - docker -v
+  - docker-compose build
+  - docker-compose up -d
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+
+script:
+  - docker-compose run web npm test
+
+after_script:
+  - docker-compose stop
+  - docker-compose push

@@ -1,13 +1,22 @@
-version: '2'
+version: '2.1'
+
 services:
   web:
     env_file: .env.docker
     build: .
+    image: 'brunoluiz/pru-warehouse'
     ports:
       - '8080:80'
     links:
       - 'postgres:db.host'
-    volumes:
-      - .:/opt/pru-warehouse
+    depends_on:
+      postgres:
+        condition: service_healthy
+
   postgres:
     image: 'postgres:alpine'
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready']
+      interval: 5s
+      timeout: 10s
+      retries: 10
