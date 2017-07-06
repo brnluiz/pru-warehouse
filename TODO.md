@@ -1,7 +1,7 @@
-- [ ] Choose a test framework
-- [ ] Implement acceptance tests
-- [ ] Choose between SQL or NoSQL
-- [ ] Implement models
+- [x] Choose a test framework
+- [x] Implement acceptance tests
+- [x] Choose between SQL or NoSQL
+- [x] Implement models
 - [ ] Implement services
 - [ ] Implement workers/handlers/whatever (check a proper structure)
 - [ ] Implement a notification manager

@@ -4,7 +4,7 @@ require('dotenv').config()
 
 let streams = []
 
-if (process.env.NODE_ENV === 'test') {
+if (process.env.NODE_ENV === 'development') {
   streams.push({
     type: 'file',
     path: `/tmp/${name}.log`
