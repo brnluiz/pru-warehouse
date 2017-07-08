@@ -12,6 +12,14 @@ const LocationService = {
       throw err
     }
   },
+  async getAll () {
+    try {
+      return await db.location.findAll()
+    } catch (err) {
+      log.error(`[${tag}] Error on fetching locations`, err)
+      throw err
+    }
+  },
   async get (id) {
     try {
       return await db.location.findOne(id)

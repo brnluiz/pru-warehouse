@@ -7,7 +7,8 @@ const fixtures = require('../../../db/fixtures')
 const db = {
   location: {
     create: sinon.stub(),
-    findOne: sinon.stub()
+    findOne: sinon.stub(),
+    findAll: sinon.stub()
   }
 }
 
@@ -29,14 +30,29 @@ test('should fail on create location', async t => {
   t.shouldFail(location)
 })
 
-test('should get location', async t => {
+test('should get all locations', async t => {
+  const expectedLocations = [fixtures.location, fixtures.location]
+  db.location.findAll.withArgs().resolves(expectedLocations)
+
+  const locations = await LocationService.getAll()
+  t.equal(locations, expectedLocations)
+})
+
+test('should fail on get all locations', async t => {
+  db.location.findAll.withArgs().throws()
+
+  const locations = LocationService.getAll()
+  t.shouldFail(locations)
+})
+
+test('should get location by id', async t => {
   db.location.findOne.withArgs(fixtures.location.id).resolves(true)
 
   const location = await LocationService.get(fixtures.location.id)
   t.ok(location)
 })
 
-test('should fail on get location', async t => {
+test('should fail on get location by id', async t => {
   db.location.findOne.withArgs(fixtures.location.id).throws()
 
   const location = LocationService.get(fixtures.location.id)
