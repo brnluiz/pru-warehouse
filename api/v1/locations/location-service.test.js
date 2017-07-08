@@ -11,9 +11,13 @@ const db = {
     findAll: sinon.stub()
   }
 }
+const eventService = {
+  emit: sinon.spy()
+}
 
 const LocationService = proxyquire('./location-service', {
-  '../../../db': db
+  '../../../db': db,
+  '../../../helpers/event-service': eventService
 })
 
 test('should create location', async t => {
@@ -21,6 +25,7 @@ test('should create location', async t => {
 
   const location = await LocationService.create(fixtures.location)
   t.ok(location)
+  t.assert(eventService.emit.calledWith('location.create', location))
 })
 
 test('should fail on create location', async t => {

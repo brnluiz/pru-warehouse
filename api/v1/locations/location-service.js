@@ -1,4 +1,5 @@
 const log = require('../../../helpers/log')
+const eventService = require('../../../helpers/event-service')
 const db = require('../../../db')
 
 const tag = 'location-service'
@@ -6,7 +7,10 @@ const tag = 'location-service'
 const LocationService = {
   async create (locationIn) {
     try {
-      return await db.location.create(locationIn)
+      const location = await db.location.create(locationIn)
+      eventService.emit('location.create', location)
+
+      return location
     } catch (err) {
       log.error(`[${tag}] Error on location creation`, err)
       throw err
