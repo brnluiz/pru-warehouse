@@ -7,3 +7,4 @@
 - [ ] Implement a notification manager
 - [ ] Implement queue (RabbitMQ or Redis)
 - [ ] Implement an auth system (HTTP Basic)
+- [ ] Implement a log with a generable logTag
