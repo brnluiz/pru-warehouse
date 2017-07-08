@@ -1,6 +1,6 @@
-const log = require('../../../helpers/log')
-const eventService = require('../../../helpers/event-service')
 const db = require('../../../db')
+const eventService = require('../../../event-service')
+const log = require('../../../../helpers/log')
 
 const tag = 'location-service'
 

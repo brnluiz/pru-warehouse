@@ -1,6 +1,7 @@
-const log = require('../../helpers/log')
 const fs = require('fs')
+const log = require('../../../helpers/log')
 const path = require('path')
+
 const dir = __dirname
 
 const isDirectory = (dir, file) =>

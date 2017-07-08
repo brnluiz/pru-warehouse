@@ -1,7 +1,7 @@
 const test = require('tape')
 
-const db = require('../db')
-const fixtures = require('../db/fixtures')
+const db = require('../src/db')
+const fixtures = require('../src/db/fixtures')
 const request = require('../helpers/supertest')
 
 test('before all', async t => {

@@ -1,4 +1,4 @@
-const log = require('./log')
+const log = require('../helpers/log')
 
 const tag = 'event-service'
 const handlers = {}

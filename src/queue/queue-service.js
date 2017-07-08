@@ -1,6 +1,6 @@
 const amqp = require('amqplib')
 
-const log = require('../helpers/log')
+const log = require('../../helpers/log')
 
 const QueueService = {
   async receive (queue, consumer) {

@@ -1,7 +1,7 @@
 const app = require('express')()
 const log = require('./helpers/log')
 
-require('./api/v1')(app)
+require('./src/api/v1')(app)
 require('dotenv').config()
 
 // Init the server and listen to the PORT configured on the dotenv file

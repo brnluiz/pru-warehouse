@@ -1,6 +1,6 @@
-const test = require('blue-tape')
 const proxyquire = require('proxyquire')
 const sinon = require('sinon')
+const test = require('blue-tape')
 
 const fixtures = require('../../../db/fixtures')
 
