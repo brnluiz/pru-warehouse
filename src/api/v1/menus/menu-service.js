@@ -20,7 +20,12 @@ const handleCreateException = (err) => {
 
 const MenuService = {
   async get (id) {
-    return null
+    try {
+      return db.menu.findById(id)
+    } catch (err) {
+      log.error({ err }, `[${tag}] Error on fetching menus`)
+      throw err
+    }
   },
   async getByLocation (locationSlug, startDate, endDate) {
     try {

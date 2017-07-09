@@ -8,7 +8,8 @@ const db = {
   menu: {
     create: sinon.stub(),
     bulkCreate: sinon.stub(),
-    findAll: sinon.stub()
+    findAll: sinon.stub(),
+    findById: sinon.stub()
   },
   location: {
     findOne: sinon.stub()
@@ -98,6 +99,20 @@ test('should fail on get menus by location with location exception', async t => 
   db.location.findOne
     .withArgs({ where: { slug: fixtures.location.slug } })
     .throws()
+
+  const menus = MenuService.getByLocation(fixtures.location.slug)
+  t.shouldFail(menus)
+})
+
+test('should get menu by id', async t => {
+  db.menu.findById.withArgs(fixtures.menu.id).resolves(fixtures.menu)
+
+  const menu = await MenuService.get(fixtures.menu.id)
+  t.deepEqual(menu, fixtures.menu)
+})
+
+test('should fail on get menu by id', async t => {
+  db.menu.findById.withArgs(fixtures.menu.id).throws()
 
   const menus = MenuService.getByLocation(fixtures.location.slug)
   t.shouldFail(menus)
