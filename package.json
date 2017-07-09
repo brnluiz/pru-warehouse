@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node app.js | ./node_modules/.bin/bunyan",
-    "acceptance": "NODE_ENV=test tape acceptance/**/*.js | tap-spec",
-    "unit": "NODE_ENV=test tape $(find ./src -type f -name '*.test.js') | tap-spec",
+    "acceptance": "NODE_ENV=test tape acceptance/**/*.js | tap-diff",
+    "unit": "NODE_ENV=test tape $(find ./src -type f -name '*.test.js') | tap-diff",
     "lint": "standard",
     "test": "standard && npm run unit && npm run acceptance "
   },
@@ -42,6 +42,6 @@
     "request-promise-native": "^1.0.4",
     "sequelize": "^4.2.1",
     "sinon": "^2.3.6",
-    "tap-prettify": "0.0.2"
+    "tap-diff": "^0.1.1"
   }
 }
