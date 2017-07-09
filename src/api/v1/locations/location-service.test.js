@@ -11,20 +11,23 @@ const db = {
     findAll: sinon.stub()
   }
 }
+
 const eventService = {
   emit: sinon.spy()
 }
 
 const LocationService = proxyquire('./location-service', {
   '../../../db': db,
-  '../../../helpers/event-service': eventService
+  '../../../event-service': eventService
 })
 
 test('should create location', async t => {
-  db.location.create.withArgs(fixtures.location).resolves(true)
+  db.location.create
+    .withArgs(fixtures.location)
+    .resolves(fixtures.location)
 
   const location = await LocationService.create(fixtures.location)
-  t.ok(location)
+  t.equal(location, fixtures.location)
   t.assert(eventService.emit.calledWith('location.create', location))
 })
 
@@ -51,15 +54,19 @@ test('should fail on get all locations', async t => {
 })
 
 test('should get location by id', async t => {
-  db.location.findOne.withArgs(fixtures.location.id).resolves(true)
+  db.location.findOne.withArgs({
+    where: { slug: fixtures.location.slug }
+  }).resolves(fixtures.location)
 
-  const location = await LocationService.get(fixtures.location.id)
+  const location = await LocationService.get(fixtures.location.slug)
   t.ok(location)
 })
 
 test('should fail on get location by id', async t => {
-  db.location.findOne.withArgs(fixtures.location.id).throws()
+  db.location.findOne.withArgs({
+    where: { slug: fixtures.location.slug }
+  }).throws()
 
-  const location = LocationService.get(fixtures.location.id)
+  const location = LocationService.get(fixtures.location.slug)
   t.shouldFail(location)
 })

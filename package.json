@@ -6,8 +6,9 @@
   "scripts": {
     "start": "node app.js | ./node_modules/.bin/bunyan",
     "acceptance": "NODE_ENV=test tape acceptance/**/*.js | tap-spec",
+    "unit": "NODE_ENV=test tape $(find ./src -type f -name '*.test.js') | tap-spec",
     "lint": "standard",
-    "test": "standard && NODE_ENV=test tape **/*.js | tap-spec"
+    "test": "standard && npm run unit && npm run acceptance "
   },
   "repository": {
     "type": "git",
