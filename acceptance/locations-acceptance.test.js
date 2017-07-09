@@ -13,7 +13,7 @@ test('before all', async t => {
   t.end()
 })
 
-test('create a collection request on all locations', t =>
+test('should create a collection request for all locations', t =>
   request
     .post('/locations/collect')
     .set('Accept', 'application/json')
@@ -25,7 +25,7 @@ test('create a collection request on all locations', t =>
     })
 )
 
-test('execute a collect on the specified location', t =>
+test('should execute a location collect', t =>
   request
     .post(`/locations/${location.slug}/collect`)
     .set('Accept', 'application/json')
@@ -33,6 +33,18 @@ test('execute a collect on the specified location', t =>
     .end((err, res) => {
       t.equals(err, null)
       t.same(res.body, {})
+      t.end()
+    })
+)
+
+test('should fail on execute a location collect due to non-existent location', t =>
+  request
+    .post(`/locations/KLAPAUCIUS/collect`)
+    .set('Accept', 'application/json')
+    .expect(500)
+    .end((err, res) => {
+      t.equals(err, null)
+      t.same(res.body, { error: 'Error on fetching location: non-existent location KLAPAUCIUS' })
       t.end()
     })
 )

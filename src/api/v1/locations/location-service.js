@@ -26,9 +26,16 @@ const LocationService = {
   },
   async get (slug) {
     try {
-      return await db.location.findOne({
+      const location = await db.location.findOne({
         where: { slug }
       })
+
+      if (location) return location
+
+      const error = `Error on fetching location: non-existent location ${slug}`
+      log.error(`[${tag}] ${error}`)
+
+      throw new Error(error)
     } catch (err) {
       log.error(`[${tag}] Error on fetching location by id`, err)
       throw err

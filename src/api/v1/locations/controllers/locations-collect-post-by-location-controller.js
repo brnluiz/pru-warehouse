@@ -9,14 +9,14 @@ const locationCollectPostByLocationController = async (req, res, next) => {
   try {
     location = await locationService.get(locationSlug)
   } catch (err) {
-    throw new Error(`Location ${locationSlug} does not exist`)
+    return next(err.message)
   }
 
   try {
     const worker = await require(workerPath(location.slug))
     await worker.run(location)
   } catch (err) {
-    throw new Error(err, `Error on ${location.slug} worker`)
+    return next(`Error on ${location.slug} worker: ${err}`)
   }
 
   res.sendStatus(201)
