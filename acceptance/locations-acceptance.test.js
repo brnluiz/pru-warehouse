@@ -4,12 +4,10 @@ const db = require('../src/db')
 const fixtures = require('../src/db/fixtures')
 const request = require('../helpers/supertest')
 
-const location = fixtures.location
-
 test('before all', async t => {
   await db.location.sync({ force: true })
   await db.menu.sync({ force: true })
-  await db.location.create(location)
+  await db.location.create(fixtures.location())
   t.end()
 })
 
@@ -27,7 +25,7 @@ test('should create a collection request for all locations', t =>
 
 test('should execute a location collect', t =>
   request
-    .post(`/locations/${location.slug}/collect`)
+    .post(`/locations/${fixtures.location().slug}/collect`)
     .set('Accept', 'application/json')
     .expect(201)
     .end((err, res) => {

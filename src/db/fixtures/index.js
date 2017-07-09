@@ -6,5 +6,5 @@ fs.readdirSync(__dirname)
   .filter(file => file !== 'index.js')
   .forEach(file => {
     const component = path.basename(file, '.js')
-    module.exports[component] = require(`./${component}`)
+    module.exports[component] = () => Object.create(require(`./${component}`))
   })

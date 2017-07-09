@@ -1,15 +1,14 @@
+const _ = require('lodash')
 const test = require('tape')
 
 const db = require('../src/db')
 const fixtures = require('../src/db/fixtures')
 const request = require('../helpers/supertest')
 
-const menu = fixtures.menu
-
 test('before all', async t => {
   await db.location.sync({ force: true })
   await db.menu.sync({ force: true })
-  await db.menu.create(menu, {
+  await db.menu.create(fixtures.menu(), {
     include: [{
       association: db.menu.location
     }]
@@ -19,7 +18,7 @@ test('before all', async t => {
 
 test('should get a menu from a location', t =>
   request
-    .get(`/locations/${menu.location.slug}/menus`)
+    .get(`/locations/${fixtures.location().slug}/menus`)
     .set('Accept', 'application/json')
     .expect(200)
     .end((err, res) => {
@@ -29,7 +28,7 @@ test('should get a menu from a location', t =>
         return menu
       })
 
-      const expected = [ fixtures.menu ]
+      const expected = [ fixtures.menu() ]
       expected[0].locationId = expected[0].id
       delete expected[0].location
 
@@ -41,7 +40,7 @@ test('should get a menu from a location', t =>
 
 test('should get a specific menu', t =>
   request
-    .get(`/menus/${menu.id}`)
+    .get(`/menus/${fixtures.menu().id}`)
     .set('Accept', 'application/json')
     .expect(200)
     .end((err, res) => {
@@ -49,7 +48,7 @@ test('should get a specific menu', t =>
       delete result.createdAt
       delete result.updatedAt
 
-      const expected = fixtures.menu
+      const expected = fixtures.menu()
       expected.locationId = expected.location.id
       delete expected.location
 
@@ -61,9 +60,9 @@ test('should get a specific menu', t =>
 
 test.skip('should get a menu from a location on a specific date', t =>
   request
-    .get(`/locations/${menu.location.slug}/menus`)
+    .get(`/locations/${fixtures.location().slug}/menus`)
     .query({
-      date: menu.date
+      date: fixtures.menu().date
     })
     .set('Accept', 'application/json')
     .expect(200)
