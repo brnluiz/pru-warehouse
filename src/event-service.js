@@ -11,7 +11,7 @@ const EventService = {
       createdAt: new Date()
     }
 
-    log.info(`[${tag}] ${event} received`, message)
+    log.info(message, `[${tag}] ${event} received `)
 
     handlers[event].forEach(handler =>
       handler(message, event))
