@@ -4,9 +4,9 @@ const collectPostController = require('./controllers/locations-collect-post-cont
 const collectPostByLocationController = require('./controllers/locations-collect-post-by-location-controller')
 
 // TODO: queue the collection process of all enabled locations
-router.post('/collect', collectPostController)
+router.post('/locations/collect', collectPostController)
 
 // TODO: start the collection process for the specified location
-router.post('/collect/:location', collectPostByLocationController)
+router.post('/locations/collect/:locationId', collectPostByLocationController)
 
 module.exports = router

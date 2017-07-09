@@ -9,7 +9,7 @@ const isDirectory = (dir, file) =>
 
 const importComponent = (app, component) => {
   log.info(`Added route /${component}`)
-  return app.use(`/${component}`, require(`./${component}`))
+  return app.use(`/`, require(`./${component}`))
 }
 
 const routes = (app) =>
