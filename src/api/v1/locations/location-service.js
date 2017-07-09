@@ -24,10 +24,10 @@ const LocationService = {
       throw err
     }
   },
-  async get (id) {
+  async get (slug) {
     try {
       return await db.location.findOne({
-        where: { id }
+        where: { slug }
       })
     } catch (err) {
       log.error(`[${tag}] Error on fetching location by id`, err)
