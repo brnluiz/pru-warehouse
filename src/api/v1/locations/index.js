@@ -1,6 +1,6 @@
 const router = require('express').Router()
 
-const collectPostController = require('./controllers/locations-collect-post-by-location-controller')
+const collectPostController = require('./controllers/locations-collect-post-controller')
 const collectPostByLocationController = require('./controllers/locations-collect-post-by-location-controller')
 
 // TODO: queue the collection process of all enabled locations
