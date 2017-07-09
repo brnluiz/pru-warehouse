@@ -2,7 +2,7 @@ const cheerio = require('cheerio')
 const request = require('request-promise-native')
 const moment = require('moment')
 
-// const menuService = require('../../../menus/menu-service')
+const menuService = require('../../../menus/menu-service')
 
 const worker = async (location) => {
   const data = await request.get('http://ru.ufsc.br/ru/')
@@ -29,15 +29,14 @@ const worker = async (location) => {
 
     const menu = {
       date: moment(startDate).add(index - 1, 'day').utc().toDate(),
-      items
+      items,
+      locationId: location.id
     }
 
     return menu
-  })
+  }).filter(menu => menu)
 
-  return menus
-
-  // return await menuService.createBulk(menus)
+  return menuService.createBulk(menus)
 }
 
 module.exports.run = worker

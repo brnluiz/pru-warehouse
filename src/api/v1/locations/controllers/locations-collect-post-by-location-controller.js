@@ -1,5 +1,3 @@
-const fs = require('fs')
-
 const locationService = require('../location-service')
 
 const workerPath = (id) => `../workers/collect/${id}`
@@ -14,14 +12,11 @@ const locationCollectPostByLocationController = async (req, res, next) => {
     throw new Error(`Location ${locationId} does not exist`)
   }
 
-  if (!fs.existsSync(workerPath(location.slug))) {
-    throw new Error(`Worker for ${location} does not exist`)
-  }
-
   try {
-    await require(workerPath(location))(location)
+    const worker = await require(workerPath(location.slug))
+    await worker.run(location)
   } catch (err) {
-    throw new Error(`Error on ${location} worker`, err)
+    throw new Error(err, `Error on ${location.slug} worker`)
   }
 
   res.sendStatus(201)
