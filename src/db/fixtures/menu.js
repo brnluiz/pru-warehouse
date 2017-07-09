@@ -1,4 +1,5 @@
 const location = require('./location')
+const moment = require('moment')
 
 module.exports = {
   id: 1,
@@ -6,6 +7,6 @@ module.exports = {
     'Fish and Chips',
     'Gelato'
   ],
-  date: new Date(),
+  date: moment().toISOString(),
   location
 }
