@@ -4,11 +4,19 @@ const log = require('../../../../helpers/log')
 
 const tag = 'menu-service'
 
-const duplicatedItems = (err) => (
-  err instanceof db.Sequelize.ValidationError &&
-  err.name === 'SequelizeUniqueConstraintError' &&
-  (err.fields.locationId && err.fields.date)
-)
+const handleCreateException = (err) => {
+  if (
+    err instanceof db.Sequelize.ValidationError &&
+    err.name === 'SequelizeUniqueConstraintError' &&
+    (err.fields.locationId && err.fields.date)
+  ) {
+    log.info({ err }, `[${tag}] Menu creation was not allowed due to duplicated entries`)
+    return
+  }
+
+  log.error({ err }, `[${tag}] Error on menu creation`)
+  throw err
+}
 
 const MenuService = {
   async get (id) {
@@ -18,42 +26,30 @@ const MenuService = {
     return null
   },
   async create (menuIn) {
+    let menu
     try {
-      const menu = await db.menu.create(menuIn)
-      eventService.emit('menu.created', menu)
-
-      log.info({ menu }, `[${tag}] Menu created`)
-
-      return menu
+      menu = await db.menu.create(menuIn)
     } catch (err) {
-      if (duplicatedItems) {
-        log.info({ err }, `[${tag}] Menu creation was not allowed due to duplicated entries`)
-        return
-      }
-
-      log.error({ err }, `[${tag}] Error on menu creation`)
-      throw err
+      handleCreateException(err)
     }
+
+    eventService.emit('menu.created', menu)
+    log.info({ menu }, `[${tag}] Menu created`)
+
+    return menu
   },
   async createBulk (menusIn) {
+    let menus
     try {
-      const menus = await db.menu.bulkCreate(menusIn, {
-        validate: true
-      })
-      eventService.emit('menu.created', menus)
-
-      log.info({ menus }, `[${tag}] Menus created`)
-
-      return menus
+      menus = await db.menu.bulkCreate(menusIn, { validate: true })
     } catch (err) {
-      if (duplicatedItems) {
-        log.info({ err }, `[${tag}] Menu creation was not allowed due to duplicated entries`)
-        return
-      }
-
-      log.error({ err }, `[${tag}] Error on menu creation`)
-      throw err
+      handleCreateException(err)
     }
+
+    eventService.emit('menu.created', menus)
+    log.info({ menus }, `[${tag}] Menus created`)
+
+    return menus
   }
 }
 
