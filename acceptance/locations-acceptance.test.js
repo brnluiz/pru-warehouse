@@ -25,7 +25,7 @@ test('create a collection request on all locations', t =>
 
 test('execute a collect on the specified location', t =>
   request
-    .post(`/locations/collect/1`)
+    .post(`/locations/1/collect`)
     .set('Accept', 'application/json')
     .expect(201)
     .end((err, res) => {

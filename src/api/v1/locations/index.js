@@ -7,6 +7,6 @@ const collectPostByLocationController = require('./controllers/locations-collect
 router.post('/locations/collect', collectPostController)
 
 // TODO: start the collection process for the specified location
-router.post('/locations/collect/:locationId', collectPostByLocationController)
+router.post('/locations/:locationId/collect', collectPostByLocationController)
 
 module.exports = router
