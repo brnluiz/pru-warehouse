@@ -39,6 +39,26 @@ test('should get a menu from a location', t =>
     })
 )
 
+test('should get a specific menu', t =>
+  request
+    .get(`/menus/${menu.id}`)
+    .set('Accept', 'application/json')
+    .expect(200)
+    .end((err, res) => {
+      const result = res.body
+      delete result.createdAt
+      delete result.updatedAt
+
+      const expected = fixtures.menu
+      expected.locationId = expected.location.id
+      delete expected.location
+
+      t.equals(err, null)
+      t.deepEquals(result, expected)
+      t.end()
+    })
+)
+
 test.skip('should get a menu from a location on a specific date', t =>
   request
     .get(`/locations/${menu.location.slug}/menus`)
