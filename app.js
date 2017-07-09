@@ -8,4 +8,8 @@ require('dotenv').config()
 const port = process.env.PORT
 app.listen(port, () => log.info('Up and running!'))
 
+app.use((error, req, res, next) => {
+  res.status(500).send({ error })
+})
+
 module.exports = app
