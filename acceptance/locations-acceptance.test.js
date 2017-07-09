@@ -6,6 +6,7 @@ const request = require('../helpers/supertest')
 
 test('before all', async t => {
   await db.location.sync({ force: true })
+  await db.menu.sync({ force: true })
   await db.location.create(fixtures.location)
   t.end()
 })
