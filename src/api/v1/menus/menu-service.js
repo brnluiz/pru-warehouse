@@ -4,6 +4,12 @@ const log = require('../../../../helpers/log')
 
 const tag = 'menu-service'
 
+const duplicatedItems = (err) => (
+  err instanceof db.Sequelize.ValidationError &&
+  err.name === 'SequelizeUniqueConstraintError' &&
+  (err.fields.locationId && err.fields.date)
+)
+
 const MenuService = {
   async get (id) {
     return null
@@ -16,9 +22,16 @@ const MenuService = {
       const menu = await db.menu.create(menuIn)
       eventService.emit('menu.created', menu)
 
+      log.info({ menu }, `[${tag}] Menu created`)
+
       return menu
     } catch (err) {
-      log.error(`[${tag}] Error on menu creation`, err)
+      if (duplicatedItems) {
+        log.info({ err }, `[${tag}] Menu creation was not allowed due to duplicated entries`)
+        return
+      }
+
+      log.error({ err }, `[${tag}] Error on menu creation`)
       throw err
     }
   },
@@ -29,9 +42,16 @@ const MenuService = {
       })
       eventService.emit('menu.created', menus)
 
+      log.info({ menus }, `[${tag}] Menus created`)
+
       return menus
     } catch (err) {
-      log.error(`[${tag}] Error on menu creation`, err)
+      if (duplicatedItems) {
+        log.info({ err }, `[${tag}] Menu creation was not allowed due to duplicated entries`)
+        return
+      }
+
+      log.error({ err }, `[${tag}] Error on menu creation`)
       throw err
     }
   }
