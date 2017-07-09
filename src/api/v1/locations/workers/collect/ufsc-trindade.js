@@ -5,6 +5,8 @@ const moment = require('moment')
 const menuService = require('../../../menus/menu-service')
 
 const worker = async (location) => {
+  if (!location.id) throw new Error('Location id is not defined')
+
   const data = await request.get('http://ru.ufsc.br/ru/')
 
   // Loads the HTML to the Cherrio lib
