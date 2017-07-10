@@ -27,7 +27,7 @@ test('should create location', async t => {
     .resolves(fixtures.location())
 
   const location = await LocationService.create(fixtures.location())
-  t.equal(location, fixtures.location())
+  t.deepEqual(location, fixtures.location())
   t.assert(eventService.emit.calledWith('location.create', location))
 })
 
@@ -43,7 +43,7 @@ test('should get all locations', async t => {
   db.location.findAll.withArgs().resolves(expectedLocations)
 
   const locations = await LocationService.getAll()
-  t.equal(locations, expectedLocations)
+  t.deepEqual(locations, expectedLocations)
 })
 
 test('should fail on get all locations', async t => {

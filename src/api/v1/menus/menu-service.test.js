@@ -36,7 +36,7 @@ test('should create menu', async t => {
     .resolves(fixtures.menu())
 
   const menu = await MenuService.create(fixtures.menu())
-  t.equal(menu, fixtures.menu())
+  t.deepEqual(menu, fixtures.menu())
   t.assert(eventService.emit.calledWith('menu.create', menu), 'should emit an event')
 })
 
@@ -58,7 +58,7 @@ test('should bulk create menus', async t => {
     .resolves(expectedMenus)
 
   const menus = await MenuService.createBulk(expectedMenus)
-  t.equal(menus, expectedMenus)
+  t.deepEqual(menus, expectedMenus)
   t.assert(eventService.emit.calledWith('menu.create', menus), 'should emit an event')
 })
 
