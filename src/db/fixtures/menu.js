@@ -1,4 +1,4 @@
-const location = require('./location')
+const location = require('./location')()
 const moment = require('moment')
 
 const menu = {
@@ -8,7 +8,7 @@ const menu = {
     'Gelato'
   ],
   date: moment().toISOString(),
-  location: location()
+  location
 }
 
 module.exports = () => menu
