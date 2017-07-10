@@ -20,8 +20,13 @@ const eventService = {
   emit: sinon.spy()
 }
 
+const locationService = {
+  get: sinon.stub()
+}
+
 const MenuService = proxyquire('./menu-service', {
   '../../../db': db,
+  '../locations/location-service': locationService,
   '../../../event-service': eventService
 })
 
@@ -70,8 +75,8 @@ test('should fail on create duplicate menu', async t => {
 })
 
 test('should get menus by location', async t => {
-  db.location.findOne
-    .withArgs({ where: { slug: fixtures.location.slug } })
+  locationService.get
+    .withArgs(fixtures.location.slug)
     .resolves(fixtures.location)
 
   db.menu.findAll
@@ -83,8 +88,8 @@ test('should get menus by location', async t => {
 })
 
 test('should fail on get menus by location with menu exception', async t => {
-  db.location.findOne
-    .withArgs({ where: { slug: fixtures.location.slug } })
+  locationService.get
+    .withArgs(fixtures.location.slug)
     .resolves(fixtures.location)
 
   db.menu.findAll

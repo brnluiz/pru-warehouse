@@ -1,5 +1,6 @@
 const db = require('../../../db')
 const eventService = require('../../../event-service')
+const locationService = require('../locations/location-service')
 const log = require('../../../../helpers/log')
 
 const tag = 'menu-service'
@@ -29,51 +30,39 @@ const MenuService = {
   },
   async getByLocation (locationSlug, startDate, endDate) {
     try {
-      const location = await db.location.findOne({
-        where: { slug: locationSlug }
-      })
+      const location = await locationService.get(locationSlug)
 
-      if (!location) {
-        const error = `Error on fetching location: non-existent location ${locationSlug}`
-        log.error(`[${tag}] ${error}`)
-        throw error
-      }
-
-      const menus = await db.menu.findAll({
+      return db.menu.findAll({
         where: { locationId: location.id }
       })
-
-      return menus
     } catch (err) {
       log.error({ err }, `[${tag}] Error on fetching menus`)
       throw err
     }
   },
   async create (menuIn) {
-    let menu
     try {
-      menu = await db.menu.create(menuIn)
+      const menu = await db.menu.create(menuIn)
+
+      eventService.emit('menu.create', menu)
+      log.info({ menu }, `[${tag}] Menu created`)
+
+      return menu
     } catch (err) {
       handleCreateException(err)
     }
-
-    eventService.emit('menu.create', menu)
-    log.info({ menu }, `[${tag}] Menu created`)
-
-    return menu
   },
   async createBulk (menusIn) {
-    let menus
     try {
-      menus = await db.menu.bulkCreate(menusIn, { validate: true })
+      const menus = await db.menu.bulkCreate(menusIn, { validate: true })
+
+      eventService.emit('menu.create', menus)
+      log.info({ menus }, `[${tag}] Menus created`)
+
+      return menus
     } catch (err) {
       handleCreateException(err)
     }
-
-    eventService.emit('menu.create', menus)
-    log.info({ menus }, `[${tag}] Menus created`)
-
-    return menus
   }
 }
 
