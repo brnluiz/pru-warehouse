@@ -23,23 +23,23 @@ const LocationService = proxyquire('./location-service', {
 
 test('should create location', async t => {
   db.location.create
-    .withArgs(fixtures.location)
-    .resolves(fixtures.location)
+    .withArgs(fixtures.location())
+    .resolves(fixtures.location())
 
-  const location = await LocationService.create(fixtures.location)
-  t.equal(location, fixtures.location)
+  const location = await LocationService.create(fixtures.location())
+  t.equal(location, fixtures.location())
   t.assert(eventService.emit.calledWith('location.create', location))
 })
 
 test('should fail on create location', async t => {
-  db.location.create.withArgs(fixtures.location).throws()
+  db.location.create.withArgs(fixtures.location()).throws()
 
-  const location = LocationService.create(fixtures.location)
+  const location = LocationService.create(fixtures.location())
   t.shouldFail(location)
 })
 
 test('should get all locations', async t => {
-  const expectedLocations = [fixtures.location, fixtures.location]
+  const expectedLocations = [fixtures.location(), fixtures.location()]
   db.location.findAll.withArgs().resolves(expectedLocations)
 
   const locations = await LocationService.getAll()
@@ -55,18 +55,18 @@ test('should fail on get all locations', async t => {
 
 test('should get location by id', async t => {
   db.location.findOne.withArgs({
-    where: { slug: fixtures.location.slug }
-  }).resolves(fixtures.location)
+    where: { slug: fixtures.location().slug }
+  }).resolves(fixtures.location())
 
-  const location = await LocationService.get(fixtures.location.slug)
+  const location = await LocationService.get(fixtures.location().slug)
   t.ok(location)
 })
 
 test('should fail on get location by id', async t => {
   db.location.findOne.withArgs({
-    where: { slug: fixtures.location.slug }
+    where: { slug: fixtures.location().slug }
   }).throws()
 
-  const location = LocationService.get(fixtures.location.slug)
+  const location = LocationService.get(fixtures.location().slug)
   t.shouldFail(location)
 })

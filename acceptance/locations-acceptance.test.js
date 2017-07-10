@@ -4,7 +4,7 @@ const db = require('../src/db')
 const fixtures = require('../src/db/fixtures')
 const request = require('../helpers/supertest')
 
-const location = fixtures.location
+const location = fixtures.location()
 
 test('before all', async t => {
   await db.location.sync({ force: true })

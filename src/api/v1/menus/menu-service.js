@@ -33,6 +33,12 @@ const MenuService = {
         where: { slug: locationSlug }
       })
 
+      if (!location) {
+        const error = `Error on fetching location: non-existent location ${locationSlug}`
+        log.error(`[${tag}] ${error}`)
+        throw error
+      }
+
       const menus = await db.menu.findAll({
         where: { locationId: location.id }
       })

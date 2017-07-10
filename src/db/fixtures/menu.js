@@ -1,12 +1,14 @@
 const location = require('./location')
 const moment = require('moment')
 
-module.exports = {
+const menu = {
   id: 1,
   items: [
     'Fish and Chips',
     'Gelato'
   ],
   date: moment().toISOString(),
-  location
+  location: location()
 }
+
+module.exports = () => menu
