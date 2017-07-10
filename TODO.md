@@ -2,9 +2,11 @@
 - [x] Implement acceptance tests
 - [x] Choose between SQL or NoSQL
 - [x] Implement models
-- [ ] Implement services
-- [ ] Implement workers/handlers/whatever (check a proper structure)
-- [ ] Implement a notification manager
+- [x] Implement services
+- [x] Implement workers/handlers/whatever (check a proper structure)
+- [x] Implement a notification manager
 - [ ] Implement queue (RabbitMQ or Redis)
 - [ ] Implement an auth system (HTTP Basic)
 - [ ] Implement a log with a generable logTag
+- [ ] Implement a better error handler for express
+- [ ] Remove db.location dependency on menu-service
