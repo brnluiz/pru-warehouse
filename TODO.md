@@ -7,6 +7,5 @@
 - [x] Implement a notification manager
 - [ ] Implement queue (RabbitMQ or Redis)
 - [ ] Implement an auth system (HTTP Basic)
-- [ ] Implement a log with a generable logTag
-- [ ] Implement a better error handler for express
-- [ ] Remove db.location dependency on menu-service
+- [x] Implement a better error handler for express
+- [x] Remove db.location dependency on menu-service
