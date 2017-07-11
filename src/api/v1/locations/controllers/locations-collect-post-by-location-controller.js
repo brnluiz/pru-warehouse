@@ -9,7 +9,7 @@ const locationCollectPostByLocationController = async (req, res, next) => {
   try {
     location = await locationService.get(locationSlug)
   } catch (err) {
-    return next(err.message)
+    return next(err)
   }
 
   try {
