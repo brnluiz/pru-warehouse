@@ -18,7 +18,7 @@ const worker = async (location) => {
   const startDateStr = dateRange[0]
 
   // Get the start date Date object
-  const startDate = moment(startDateStr, 'MM/DD')
+  const startDate = moment(startDateStr, 'DD/MM')
 
   // Get the menu's table and iterate over it
   const rows = $($('table > tbody')[0]).find('tr').toArray()
