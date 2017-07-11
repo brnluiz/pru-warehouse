@@ -9,7 +9,9 @@ const port = process.env.PORT
 app.listen(port, () => log.info('Up and running!'))
 
 app.use((error, req, res, next) => {
-  res.status(500).send({ error })
+  const message = error.message || 'Oops... Some dog ate your request!'
+  const status = error.status || 500
+  res.status(status).send({ error: message })
 })
 
 module.exports = app
