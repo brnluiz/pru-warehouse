@@ -39,19 +39,19 @@ test('should get a menu from a location', t =>
     })
 )
 
-test.skip('should fail on get a menu from a non-existent location', t =>
+test('should fail on get a menu from a non-existent location', t =>
   request
     .get(`/locations/KLAPAUCIUS/menus`)
     .set('Accept', 'application/json')
     .expect(404)
     .end((err, res) => {
       t.equals(err, null)
-      t.same(res.body, { error: 'Error on fetching location: non-existent location KLAPAUCIUS' })
+      t.deepEquals(res.body, { error: 'Location not found' })
       t.end()
     })
 )
 
-test('should get a specific menu', t =>
+test.skip('should get a specific menu', t =>
   request
     .get(`/menus/${menu.id}`)
     .set('Accept', 'application/json')
@@ -77,8 +77,8 @@ test.skip('should fail on get a non-existent menu', t =>
     .set('Accept', 'application/json')
     .expect(404)
     .end((err, res) => {
-      console.log(res.body)
       t.equals(err, null)
+      t.deepEquals(res.body, { error: 'Menu not found' })
       t.end()
     })
 )

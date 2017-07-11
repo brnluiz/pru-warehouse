@@ -8,7 +8,7 @@ const menusGetByLocation = async (req, res, next) => {
     res.status(200).send(menus)
     next()
   } catch (err) {
-    return next(err.message)
+    return next(err)
   }
 }
 

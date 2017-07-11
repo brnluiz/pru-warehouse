@@ -10,7 +10,7 @@ const LocationService = {
 
       return location
     } catch (err) {
-      throw error.Generic('Error on location creation', err)
+      throw new error.GenericError('Error on location creation', err)
     }
   },
   async getAll () {
@@ -18,11 +18,11 @@ const LocationService = {
     try {
       locations = await db.location.findAll()
     } catch (err) {
-      throw error.Generic('Error on fetching locations', err)
+      throw new error.GenericError('Error on fetching locations', err)
     }
     if (locations.length) return locations
 
-    throw error.NotFound('Locations not found')
+    throw new error.NotFoundError('Locations not found')
   },
   async get (slug) {
     let location
@@ -31,12 +31,12 @@ const LocationService = {
         where: { slug }
       })
     } catch (err) {
-      throw error.Generic('Error on fetching location by id', err)
+      throw new error.GenericError('Error on fetching location by id', err)
     }
 
     if (location) return location
 
-    throw error.NotFound('Location not found')
+    throw new error.NotFoundError('Location not found')
   }
 }
 

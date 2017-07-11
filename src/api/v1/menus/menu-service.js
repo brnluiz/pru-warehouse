@@ -1,4 +1,5 @@
 const db = require('../../../db')
+const error = require('../../../errors')
 const eventService = require('../../../event-service')
 const locationService = require('../locations/location-service')
 const log = require('../../../../helpers/log')
@@ -15,29 +16,37 @@ const handleCreateException = (err) => {
     return
   }
 
-  log.error({ err }, `[${tag}] Error on menu creation`)
-  throw err
+  throw new error.GenericError('Error on creating menu', err)
 }
 
 const MenuService = {
   async get (id) {
+    let menu
     try {
-      return db.menu.findById(id)
+      menu = await db.menu.findById(id)
     } catch (err) {
-      log.error({ err }, `[${tag}] Error on fetching menus`)
-      throw err
+      throw new error.GenericError('Error on fetching menus', err)
     }
+
+    if (menu) return menu
+
+    throw new error.NotFoundError('Menu not found')
   },
   async getByLocation (locationSlug, startDate, endDate) {
+    let location
     try {
-      const location = await locationService.get(locationSlug)
+      location = await locationService.get(locationSlug)
+    } catch (err) {
+      if (err instanceof error.NotFoundError) throw err
+      else throw new error.GenericError('Error on fetching menus', err)
+    }
 
+    try {
       return db.menu.findAll({
         where: { locationId: location.id }
       })
     } catch (err) {
-      log.error({ err }, `[${tag}] Error on fetching menus`)
-      throw err
+      throw new error.GenericError('Error on fetching menus', err)
     }
   },
   async create (menuIn) {
