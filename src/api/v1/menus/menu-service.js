@@ -42,9 +42,10 @@ const MenuService = {
     }
 
     try {
-      return db.menu.findAll({
-        where: { locationId: location.id }
-      })
+      const conditions = { locationId: location.id }
+      if (startDate && endDate) conditions.date = { $bt: [startDate, endDate] }
+
+      return db.menu.findAll({ where: conditions })
     } catch (err) {
       throw new error.GenericError('Error on fetching menus', err)
     }

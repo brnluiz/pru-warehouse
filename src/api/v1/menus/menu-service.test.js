@@ -76,36 +76,55 @@ test('should fail on create duplicate menu', async t => {
 
 test('should get menus by location', async t => {
   locationService.get
-    .withArgs(fixtures.location.slug)
-    .resolves(fixtures.location)
+    .withArgs(fixtures.location().slug)
+    .resolves(fixtures.location())
 
   db.menu.findAll
-    .withArgs({ where: { locationId: fixtures.location.id } })
+    .withArgs({ where: { locationId: fixtures.location().id } })
     .resolves([fixtures.menu()])
 
-  const menus = await MenuService.getByLocation(fixtures.location.slug)
+  const menus = await MenuService.getByLocation(fixtures.location().slug)
+  t.deepEqual(menus, [fixtures.menu()])
+})
+
+test('should get menus by location with date range', async t => {
+  locationService.get
+    .withArgs(fixtures.location().slug)
+    .resolves(fixtures.location())
+
+  const { startDate, endDate } = [new Date(), new Date()]
+  db.menu.findAll
+    .withArgs({
+      where: {
+        locationId: fixtures.location().id,
+        date: { $bt: [startDate, endDate] }
+      }
+    })
+    .resolves([fixtures.menu()])
+
+  const menus = await MenuService.getByLocation(fixtures.location().slug, startDate, endDate)
   t.deepEqual(menus, [fixtures.menu()])
 })
 
 test('should fail on get menus by location with menu exception', async t => {
   locationService.get
-    .withArgs(fixtures.location.slug)
-    .resolves(fixtures.location)
+    .withArgs(fixtures.location().slug)
+    .resolves(fixtures.location())
 
   db.menu.findAll
-    .withArgs({ where: { locationId: fixtures.location.id } })
+    .withArgs({ where: { locationId: fixtures.location().id } })
     .throws()
 
-  const menus = MenuService.getByLocation(fixtures.location.slug)
+  const menus = MenuService.getByLocation(fixtures.location().slug)
   t.shouldFail(menus)
 })
 
 test('should fail on get menus by location with location exception', async t => {
   db.location.findOne
-    .withArgs({ where: { slug: fixtures.location.slug } })
+    .withArgs({ where: { slug: fixtures.location().slug } })
     .throws()
 
-  const menus = MenuService.getByLocation(fixtures.location.slug)
+  const menus = MenuService.getByLocation(fixtures.location().slug)
   t.shouldFail(menus)
 })
 
