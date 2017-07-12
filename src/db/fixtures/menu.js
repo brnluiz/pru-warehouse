@@ -7,7 +7,7 @@ const menu = {
     'Fish and Chips',
     'Gelato'
   ],
-  date: moment().toISOString(),
+  date: moment().format('YYYY-MM-DD'),
   location
 }
 

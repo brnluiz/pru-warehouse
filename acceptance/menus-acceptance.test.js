@@ -83,7 +83,7 @@ test('should fail on get a non-existent menu', t =>
     })
 )
 
-test.skip('should get a menu from a location on a specific date', t =>
+test('should get a menu from a location on a specific date', t =>
   request
     .get(`/locations/${menu.location.slug}/menus`)
     .query({
@@ -92,8 +92,18 @@ test.skip('should get a menu from a location on a specific date', t =>
     .set('Accept', 'application/json')
     .expect(200)
     .end((err, res) => {
+      const result = res.body.map(menu => {
+        delete menu.createdAt
+        delete menu.updatedAt
+        return menu
+      })
+
+      const expected = [ fixtures.menu() ]
+      expected[0].locationId = expected[0].location.id
+      delete expected[0].location
+
       t.equals(err, null)
-      t.same(res.body, {})
+      t.deepEquals(result, expected)
       t.end()
     })
 )

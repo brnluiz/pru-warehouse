@@ -44,6 +44,7 @@ const MenuService = {
     try {
       const conditions = { locationId: location.id }
       if (startDate && endDate) conditions.date = { $bt: [startDate, endDate] }
+      else if (startDate) conditions.date = startDate
 
       return db.menu.findAll({ where: conditions })
     } catch (err) {
