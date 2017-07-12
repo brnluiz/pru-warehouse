@@ -51,7 +51,7 @@ test('should fail on get a menu from a non-existent location', t =>
     })
 )
 
-test.skip('should get a specific menu', t =>
+test('should get a specific menu', t =>
   request
     .get(`/menus/${menu.id}`)
     .set('Accept', 'application/json')
@@ -71,7 +71,7 @@ test.skip('should get a specific menu', t =>
     })
 )
 
-test.skip('should fail on get a non-existent menu', t =>
+test('should fail on get a non-existent menu', t =>
   request
     .get(`/menus/10`)
     .set('Accept', 'application/json')
