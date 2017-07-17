@@ -41,6 +41,7 @@
     "request": "^2.81.0",
     "request-promise-native": "^1.0.4",
     "sequelize": "^4.2.1",
+    "sequelize-cli": "^2.7.0",
     "sinon": "^2.3.6",
     "tap-diff": "^0.1.1"
   }
