@@ -7,8 +7,8 @@ const request = require('../helpers/supertest')
 const menu = fixtures.menu()
 
 test('before all', async t => {
-  await db.location.sync({ force: true })
-  await db.menu.sync({ force: true })
+  await db.menu.truncate()
+  await db.location.truncate()
   await db.menu.create(menu, {
     include: [{
       association: db.menu.location
