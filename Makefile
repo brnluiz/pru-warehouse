@@ -7,7 +7,10 @@ up:
 	docker-compose up -d
 
 migrate:
-	docker-compose run web sequelize db:migrate
+	docker-compose run web ./node_modules/.bin/sequelize db:migrate
+
+rm: stop
+	docker-compose rm -f
 
 stop:
 	docker-compose stop
