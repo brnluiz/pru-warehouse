@@ -8,12 +8,11 @@ services:
 before_script:
   - docker-compose -v
   - docker -v
-  - docker-compose build
-  - docker-compose up -d
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+  - make all
 
 script:
-  - docker-compose run web npm test
+  - make test
 
 after_script:
   - docker-compose stop
