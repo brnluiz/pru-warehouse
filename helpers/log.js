@@ -16,6 +16,7 @@ const stdStream = {
 
 switch (process.env.NODE_ENV) {
   case 'development':
+    streams.push(stdStream)
     streams.push(fileStream)
     break
   case 'test':
