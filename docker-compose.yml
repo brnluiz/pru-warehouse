@@ -3,7 +3,7 @@ version: '2.1'
 services:
   web:
     env_file: .env.development
-    build: 
+    build:
       args:
         - NODE_ENV=development
       context: .
@@ -12,6 +12,7 @@ services:
       - .:/opt/pru-warehouse
     ports:
       - '8080:80'
+      - '9229:9229'
     links:
       - 'postgres:db.host'
     depends_on:
