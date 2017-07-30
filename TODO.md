@@ -6,6 +6,6 @@
 - [x] Implement workers/handlers/whatever (check a proper structure)
 - [x] Implement a notification manager
 - [ ] Implement queue (RabbitMQ or Redis)
-- [ ] Implement an auth system (HTTP Basic)
+- [x] Implement an auth system (HTTP Basic)
 - [x] Implement a better error handler for express
 - [x] Remove db.location dependency on menu-service

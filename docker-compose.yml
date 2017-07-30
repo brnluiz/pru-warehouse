@@ -2,12 +2,12 @@ version: '2.1'
 
 services:
   web:
+    image: 'brunoluiz/pru-warehouse'
     env_file: .env.development
     build:
       args:
         - NODE_ENV=development
       context: .
-    image: 'brunoluiz/pru-warehouse'
     volumes:
       - .:/opt/pru-warehouse
     ports:
@@ -18,7 +18,7 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    command: ./node_modules/.bin/nodemon ./app.js --inspect=0.0.0.0:9229
+    command: ../node_modules/.bin/nodemon ./app.js --inspect=0.0.0.0:9229
 
   postgres:
     image: 'postgres:alpine'
